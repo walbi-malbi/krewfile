@@ -64,11 +64,16 @@ in
     home.sessionPath = [ "${cfg.krewRoot}/bin" ];
 
     home.activation.krew = hm.dag.entryAfter [ "installPackages" ] ''
+      #!/usr/bin/env bash
       export KREW_ROOT="${cfg.krewRoot}";
 
-      run ${finalPackage}/bin/${finalPackage.pname} \
-        -command ${cfg.krewPackage}/bin/${cfg.krewPackage.pname} \
-        -file ${krewfileContent} ${args}
+      rm -f /tmp/krew_root
+      echo test >>/tmp/krew_root
+      env >>/tmp/krew_root
+
+      # run ${finalPackage}/bin/${finalPackage.pname} \
+      #   -command ${cfg.krewPackage}/bin/${cfg.krewPackage.pname} \
+      #   -file ${krewfileContent} ${args}
     '';
   };
 }
